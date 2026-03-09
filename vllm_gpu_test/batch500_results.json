@@ -1,0 +1,144 @@
+{
+  "test1": {
+    "time_s": 31.12,
+    "per_prompt_ms": 62.24,
+    "throughput": 16.07,
+    "Active threads (>5%)": "80/80",
+    "Avg CPU util": "23.9%",
+    "Max proc threads": 106,
+    "Avg memory": "2708 MB",
+    "cpu_stats": {
+      "logical_cpus": 80,
+      "active_threads": 80,
+      "avg_cpu_pct": 23.9,
+      "max_process_threads": 106,
+      "avg_mem_mb": 2708.0,
+      "top10": [
+        [
+          22,
+          42.2
+        ],
+        [
+          64,
+          41.8
+        ],
+        [
+          74,
+          38.7
+        ],
+        [
+          24,
+          37.9
+        ],
+        [
+          21,
+          37.8
+        ],
+        [
+          61,
+          36.2
+        ],
+        [
+          23,
+          35.7
+        ],
+        [
+          60,
+          35.7
+        ],
+        [
+          16,
+          35.4
+        ],
+        [
+          30,
+          35.4
+        ]
+      ]
+    }
+  },
+  "test2": {
+    "time_s": 73.59,
+    "per_prompt_ms": 147.18,
+    "throughput": 6.79,
+    "Active threads (>5%)": "78/80",
+    "Avg CPU util": "26.3%",
+    "Max proc threads": 189,
+    "Avg memory": "535 MB",
+    "Init time": "12.00s",
+    "cpu_stats": {
+      "logical_cpus": 80,
+      "active_threads": 78,
+      "avg_cpu_pct": 26.3,
+      "max_process_threads": 189,
+      "avg_mem_mb": 535.0,
+      "top10": [
+        [
+          40,
+          90.1
+        ],
+        [
+          48,
+          82.6
+        ],
+        [
+          51,
+          82.4
+        ],
+        [
+          50,
+          82.1
+        ],
+        [
+          49,
+          82.1
+        ],
+        [
+          46,
+          82.1
+        ],
+        [
+          41,
+          82.0
+        ],
+        [
+          54,
+          82.0
+        ],
+        [
+          44,
+          82.0
+        ],
+        [
+          47,
+          81.9
+        ]
+      ]
+    },
+    "init_time_s": 12.0
+  },
+  "test3": {
+    "time_s": 2.86,
+    "per_prompt_ms": 5.72,
+    "throughput": 174.67,
+    "Peak GPU mem": "0.47 GB",
+    "peak_gpu_gb": 0.47
+  },
+  "test4": {
+    "time_s": 0.91,
+    "per_prompt_ms": 1.82,
+    "throughput": 550.81,
+    "Init time": "12.77s",
+    "Peak GPU mem": "0.01 GB",
+    "init_time_s": 12.77,
+    "peak_gpu_gb": 0.01
+  },
+  "_meta": {
+    "date": "2026-02-17 14:06:19",
+    "model": "facebook/opt-125m",
+    "batch_size": 500,
+    "cpu": "40 physical / 80 logical",
+    "ram_gb": 251.5,
+    "gpu": "NVIDIA TITAN RTX"
+  }
+}
