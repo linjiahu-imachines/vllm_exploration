@@ -149,11 +149,23 @@ def test2_vllm_cpu():
     import subprocess
 
     # vLLM CPU requires a separate CPU-specific build.
-    # The CPU build lives in vllm_test/venv.
-    cpu_python = "/home/linhu/projects/vllm_exploration/vllm_test/venv/bin/python3"
+    # Resolve interpreter from env var first, then common local paths.
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    cpu_python_candidates = [
+        os.environ.get("VLLM_CPU_PYTHON", ""),
+        os.path.join(project_root, "vllm_test", "venv", "bin", "python3"),
+        os.path.join(project_root, "vllm_cpu_venv", "bin", "python3"),
+    ]
+    cpu_python = next((p for p in cpu_python_candidates if p and os.path.exists(p)), None)
     test_script = os.path.join(os.path.dirname(__file__), "test2_vllm_cpu.py")
 
-    print(f"  Using CPU-build vLLM from: vllm_test/venv")
+    if cpu_python is None:
+        print("  ❌ vLLM CPU interpreter not found.")
+        print("  Set VLLM_CPU_PYTHON to a valid interpreter, e.g.")
+        print("  export VLLM_CPU_PYTHON=~/projects/vllm_exploration/vllm_cpu_venv/bin/python3")
+        return {"status": "FAILED", "reason": "vLLM CPU interpreter not found"}
+
+    print(f"  Using CPU-build vLLM interpreter: {cpu_python}")
     print(f"  Running subprocess: {cpu_python} {test_script}")
 
     try:
@@ -201,6 +213,9 @@ def test2_vllm_cpu():
 
 def test3_transformers_gpu():
     print_header("TEST 3: Transformers on GPU  (500 prompts)")
+    if not torch.cuda.is_available():
+        print("  ⚠️  SKIPPED: CUDA is not available on this machine.")
+        return {"status": "SKIPPED", "reason": "CUDA not available"}
     from transformers import AutoTokenizer, AutoModelForCausalLM
 
     tok = AutoTokenizer.from_pretrained(MODEL_NAME)
@@ -236,6 +251,9 @@ def test3_transformers_gpu():
 
 def test4_vllm_gpu():
     print_header("TEST 4: vLLM on GPU  (500 prompts)")
+    if not torch.cuda.is_available():
+        print("  ⚠️  SKIPPED: CUDA is not available on this machine.")
+        return {"status": "SKIPPED", "reason": "CUDA not available"}
     from vllm import LLM, SamplingParams
 
     print(f"  Initializing vLLM on GPU: {torch.cuda.get_device_name(0)}")
@@ -325,6 +343,8 @@ def main():
         r = results.get(key, {})
         if r.get("status") == "FAILED":
             print(fmt.format(label, "FAILED", "-", "-"))
+        elif r.get("status") == "SKIPPED":
+            print(fmt.format(label, "SKIPPED", "-", "-"))
         elif "time_s" in r:
             t = f"{r['time_s']:.2f}s"
             tp = f"{r['throughput']:.1f} p/s"
