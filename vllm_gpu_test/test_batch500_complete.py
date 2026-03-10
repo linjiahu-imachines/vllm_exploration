@@ -25,6 +25,24 @@ MODEL_NAME = "facebook/opt-125m"
 BATCH_SIZE = 500
 MAX_NEW_TOKENS = 30
 PROMPTS = [f"Question {i}: What is the meaning of" for i in range(BATCH_SIZE)]
+CPU_THREADS = int(os.environ.get("CPU_THREADS", "0"))
+
+
+def configure_cpu_threads():
+    """Apply a fair CPU thread cap for both Transformers and vLLM."""
+    if CPU_THREADS <= 0:
+        return
+    os.environ["OMP_NUM_THREADS"] = str(CPU_THREADS)
+    os.environ["MKL_NUM_THREADS"] = str(CPU_THREADS)
+    os.environ["OPENBLAS_NUM_THREADS"] = str(CPU_THREADS)
+    os.environ["NUMEXPR_NUM_THREADS"] = str(CPU_THREADS)
+    os.environ["KMP_AFFINITY"] = "granularity=fine,compact,1,0"
+    # Keep PyTorch inter-op low for stable CPU baselines.
+    try:
+        torch.set_num_threads(CPU_THREADS)
+        torch.set_num_interop_threads(1)
+    except Exception:
+        pass
 
 
 class CPUMonitor:
@@ -111,6 +129,7 @@ def test1_transformers_cpu():
     print_header("TEST 1: Transformers on CPU  (500 prompts)")
     from transformers import AutoTokenizer, AutoModelForCausalLM
 
+    configure_cpu_threads()
     tok = AutoTokenizer.from_pretrained(MODEL_NAME)
     model = AutoModelForCausalLM.from_pretrained(MODEL_NAME)
     model.eval()
@@ -169,9 +188,20 @@ def test2_vllm_cpu():
     print(f"  Running subprocess: {cpu_python} {test_script}")
 
     try:
+        env = os.environ.copy()
+        # Avoid forwarding helper vars that vLLM doesn't recognize.
+        env.pop("VLLM_CPU_PYTHON", None)
+        env.pop("VLLM_ATTENTION_BACKEND", None)
+        if CPU_THREADS > 0:
+            env["OMP_NUM_THREADS"] = str(CPU_THREADS)
+            env["MKL_NUM_THREADS"] = str(CPU_THREADS)
+            env["OPENBLAS_NUM_THREADS"] = str(CPU_THREADS)
+            env["NUMEXPR_NUM_THREADS"] = str(CPU_THREADS)
+            env["KMP_AFFINITY"] = "granularity=fine,compact,1,0"
+
         proc = subprocess.run(
             [cpu_python, test_script],
-            capture_output=True, text=True, timeout=1800,
+            capture_output=True, text=True, timeout=1800, env=env,
             cwd=os.path.dirname(__file__),
         )
         # Print all output
@@ -288,6 +318,8 @@ def main():
     print(f"Date:       {ts}")
     print(f"Model:      {MODEL_NAME}")
     print(f"Batch size: {BATCH_SIZE}")
+    if CPU_THREADS > 0:
+        print(f"CPU thread cap: {CPU_THREADS}")
     print(f"CPU:        {psutil.cpu_count()} logical threads "
           f"({psutil.cpu_count(logical=False)} physical cores)")
     print(f"RAM:        {psutil.virtual_memory().total / 1024**3:.1f} GB")
