@@ -502,7 +502,7 @@ VLLM_ATTENTION_BACKEND=TRITON_ATTN python3 test_batch500_complete.py
 | File | Description |
 |------|-------------|
 | `test_batch500_complete.py` | Main test script (runs Tests 1, 3, 4 + orchestrates Test 2) |
-| `test2_vllm_cpu.py` | Standalone vLLM CPU test (run by subprocess with CPU venv) |
+| `../vllm_cpu_test/test2_vllm_cpu.py` | Standalone vLLM CPU test (run by subprocess with CPU venv) |
 | `batch500_results.json` | Raw results in JSON format |
 | `BATCH500_COMPARISON.md` | This report |
 

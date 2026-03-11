@@ -176,7 +176,7 @@ def test2_vllm_cpu():
         os.path.join(project_root, "vllm_cpu_venv", "bin", "python3"),
     ]
     cpu_python = next((p for p in cpu_python_candidates if p and os.path.exists(p)), None)
-    test_script = os.path.join(os.path.dirname(__file__), "test2_vllm_cpu.py")
+    test_script = os.path.join(project_root, "vllm_cpu_test", "test2_vllm_cpu.py")
 
     if cpu_python is None:
         print("  ❌ vLLM CPU interpreter not found.")
@@ -202,7 +202,7 @@ def test2_vllm_cpu():
         proc = subprocess.run(
             [cpu_python, test_script],
             capture_output=True, text=True, timeout=1800, env=env,
-            cwd=os.path.dirname(__file__),
+            cwd=os.path.dirname(test_script),
         )
         # Print all output
         for line in proc.stdout.splitlines():

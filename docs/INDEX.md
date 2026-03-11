@@ -6,6 +6,38 @@ All project documentation is organized in this folder.
 
 ## 📚 Available Documents
 
+### 0.5 QWEN3_1_7B_CPU_EVALUATION.md ⭐⭐ NEW!
+**Size**: ~4 KB  
+**Audience**: Engineers, Evaluators  
+**Purpose**: Dedicated CPU-only benchmark report for `Qwen/Qwen3-1.7B`
+
+**Contents:**
+- Dedicated setup and run commands for `vllm_cpu_qwen3_1_7b_test/`
+- Single-query and 500-query comparisons
+- `qwen3-1.7B without vLLM` vs `qwen3-1.7B with vLLM` results
+- Cold-start vs steady-state interpretation
+
+**When to read**: When evaluating `Qwen/Qwen3-1.7B` specifically on CPU
+
+---
+
+### 0. CPU_ONLY_BATCH500_RUN_AND_ANALYSIS.md ⭐⭐ NEW!
+**Size**: ~6 KB  
+**Audience**: Engineers, Operators  
+**Purpose**: Step-by-step CPU-only execution guide with latest batch-500 measurements and analysis
+
+**Contents:**
+- Exact commands to run on this machine
+- Output file locations
+- Latest measured Transformers vs vLLM CPU metrics
+- CPU utilization and memory analysis
+- Validation notes for AMX/AVX512, GCC, install path, and `VLLM_CPU_SGL_KERNEL`
+- Practical deployment recommendation for CPU-only environments
+
+**When to read**: When you want to run or reproduce the CPU-only benchmark and interpret results quickly
+
+---
+
 ### 1. VLLM_DEEP_DIVE.md ⭐⭐⭐ NEW!
 **Size**: 60+ KB (1,100+ lines)  
 **Audience**: Engineers, Researchers, Technical Leadership  
