@@ -1,6 +1,6 @@
 {
   "meta": {
-    "started_at_utc": "2026-03-17T17:23:19.847064+00:00",
+    "started_at_utc": "2026-03-17T16:28:01.496194+00:00",
     "model": "Qwen/Qwen3-1.7B",
     "single_batch_size": 1,
     "large_batch_size": 2000,
@@ -36,7 +36,7 @@
       },
       "memory": {
         "total_gb": 31.34,
-        "available_gb": 29.68
+        "available_gb": 29.71
       }
     }
   },
@@ -47,9 +47,9 @@
       "batch_size": 1,
       "max_new_tokens": 30,
       "micro_batch_size": 1,
-      "time_s": 2.75,
-      "per_prompt_ms": 2754.88,
-      "throughput_prompts_per_s": 0.36
+      "time_s": 2.72,
+      "per_prompt_ms": 2720.62,
+      "throughput_prompts_per_s": 0.37
     },
     "qwen3-1.7B with vLLM": {
       "engine": "qwen3-1.7B with vLLM",
@@ -57,10 +57,10 @@
       "batch_size": 1,
       "max_new_tokens": 30,
       "max_num_seqs": 1,
-      "init_time_s": 8.8,
-      "time_s": 2.16,
-      "per_prompt_ms": 2158.93,
-      "throughput_prompts_per_s": 0.46
+      "init_time_s": 9.3,
+      "time_s": 2.15,
+      "per_prompt_ms": 2146.01,
+      "throughput_prompts_per_s": 0.47
     }
   },
   "batch_500_query": {
@@ -70,30 +70,30 @@
       "batch_size": 2000,
       "max_new_tokens": 30,
       "micro_batch_size": 25,
-      "time_s": 312.39,
-      "per_prompt_ms": 156.2,
-      "throughput_prompts_per_s": 6.4
+      "time_s": 313.08,
+      "per_prompt_ms": 156.54,
+      "throughput_prompts_per_s": 6.39
     },
     "qwen3-1.7B with vLLM": {
       "engine": "qwen3-1.7B with vLLM",
       "model": "Qwen/Qwen3-1.7B",
       "batch_size": 2000,
       "max_new_tokens": 30,
-      "max_num_seqs": 256,
-      "init_time_s": 9.06,
-      "time_s": 104.36,
-      "per_prompt_ms": 52.18,
-      "throughput_prompts_per_s": 19.17
+      "max_num_seqs": 32,
+      "init_time_s": 9.51,
+      "time_s": 215.92,
+      "per_prompt_ms": 107.96,
+      "throughput_prompts_per_s": 9.26
     }
   },
   "ratios": {
     "single_query": {
-      "time_ratio_with_over_without_vllm": 0.785,
-      "throughput_ratio_with_over_without_vllm": 1.278
+      "time_ratio_with_over_without_vllm": 0.79,
+      "throughput_ratio_with_over_without_vllm": 1.27
     },
     "batch_500_query": {
-      "time_ratio_with_over_without_vllm": 0.334,
-      "throughput_ratio_with_over_without_vllm": 2.995
+      "time_ratio_with_over_without_vllm": 0.69,
+      "throughput_ratio_with_over_without_vllm": 1.449
     }
   }
 }
