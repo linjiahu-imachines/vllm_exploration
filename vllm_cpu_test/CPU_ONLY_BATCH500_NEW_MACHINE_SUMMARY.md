@@ -26,8 +26,8 @@
 
 ## Test Setup
 
-- **Without vLLM**: HuggingFace Transformers on CPU (`test_batch500_complete.py`, Test 1)
-- **With vLLM**: vLLM CPU backend (`test2_vllm_cpu.py`, invoked from `test_batch500_complete.py` Test 2)
+- **Without vLLM**: HuggingFace Transformers on CPU (`vllm_gpu_test/test_batch500_complete.py`, Test 1)
+- **With vLLM**: vLLM CPU backend (`vllm_cpu_test/test2_vllm_cpu.py`, invoked from `vllm_gpu_test/test_batch500_complete.py` Test 2)
 - **Batch size**: 500
 - **Environment**: CPU-only (GPU tests skipped/unsupported on this node)
 
@@ -103,4 +103,3 @@ On this new CPU-only VM (4 physical cores / 8 logical), for `facebook/opt-125m` 
 - **vLLM CPU**: functional and stable, but slower in this specific setup/workload
 
 Recommended default on this machine for offline batch inference: **Transformers CPU**.
-

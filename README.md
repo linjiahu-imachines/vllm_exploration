@@ -20,6 +20,7 @@
 | Folder | Purpose | Hardware |
 |--------|---------|----------|
 | **[vllm_test/](vllm_test/)** | CPU performance tests | 60-core CPU |
+| **[vllm_cpu_test/](vllm_cpu_test/)** | CPU-only batch-500 vLLM assets | CPU-only Azure VM |
 | **[vllm_gpu_test/](vllm_gpu_test/)** | GPU performance tests | 4x NVIDIA TITAN RTX |
 
 ---
@@ -109,6 +110,11 @@ vllm_exploration/
 │   ├── *.md                     ← CPU reports
 │   ├── outputs/                 ← Saved results
 │   └── venv/                    ← CPU environment
+│
+├── vllm_cpu_test/               ← CPU-only batch-500 assets
+│   ├── test2_vllm_cpu.py        ← Standalone vLLM CPU benchmark
+│   ├── test_vllm_cpu_quick.sh   ← CPU quick runner
+│   └── *.md                     ← CPU-only reports
 │
 └── vllm_gpu_test/               ← GPU Tests
     ├── test_*.py                ← Test scripts
